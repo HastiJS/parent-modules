@@ -12,7 +12,7 @@ $ npm install parent-modules --save
 
 ## Usage
 
-In all examples bellow, 'module-one' executed.
+In all examples bellow, **module-one** executed.
 
 ### Get parents IDs
 
