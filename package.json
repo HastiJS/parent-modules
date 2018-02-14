@@ -1,6 +1,6 @@
 {
   "name": "parent-modules",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Get all parent modules including the module which our script lives in.",
   "keywords": [
     "module",
