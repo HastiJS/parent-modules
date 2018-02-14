@@ -2,7 +2,7 @@
 
 > Get all parent modules
 
-Useful when you want to get all parent modules including the module which our script lives in.
+Useful when you want to get all parent modules including the module which your script lives in.
 
 ## Install
 
@@ -10,9 +10,33 @@ Useful when you want to get all parent modules including the module which our sc
 $ npm install parent-modules --save
 ```
 
+## Know more
+
+Assume that we have three nested modules into `/home/hastijs` directory. That means we require module three into module two and module two into module one.
+
+```
+/home/hastijs/
+|_ module-one.js
+   |_ module-two.js
+      |_ module-three.js
+```
+
+Now we run `module-one` while `parent-modules` called into  `module-three`.
+
+```js
+// module-three.js
+console.log(require('parent-modules')());
+```
+
+The result is:
+
+```js
+//=> [ '/home/hastijs/module-three.js', '/home/hastijs/module-two.js', '/home/hastijs/module-one.js' ]
+```
+
 ## Usage
 
-In all examples bellow, 'module-one' executed.
+In all examples bellow, **module-one** executed.
 
 ### Get parents IDs
 
@@ -54,7 +78,7 @@ console.log(parentModules(options));
 
 ```js
 // module-two.js (path: /home/hastijs/module-tow.js)
-module.exports = require('./module-three');
+require('./module-three');
 ```
 
 ```js
@@ -63,24 +87,24 @@ require('./module-two');
 //=> [ 'module-three', 'module-one' ]
 ```
 
-### Search and get parents names into an index range
+### Search and get parents name->id (complex) into an index range
 
 ```js
 // module-three.js (path: /home/hastijs/module-three.js)
 const parentModules = require('parent-modules');
-const options = {type: 'names', find: /module-t/, indexRange: [1, 2]};
+const options = {type: 'complex', find: /module-t/, indexRange: [1, 2]};
 console.log(parentModules(options));
 ```
 
 ```js
 // module-two.js (path: /home/hastijs/module-tow.js)
-module.exports = require('./module-three');
+require('./module-three');
 ```
 
 ```js
 // module-one.js (path: /home/hastijs/module-one.js)
 require('./module-two');
-//=> [ 'module-two' ]
+//=> [ 'module-two': '/home/hastijs/module-tow.js' ]
 ```
 
 ## API
